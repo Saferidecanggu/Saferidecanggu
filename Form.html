@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Formulir Penyewaan Motor</title>
+    <style>
+      /* Tambahkan ini di dalam <style> tag di <head> HTML kamu */
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f6f8;
+      }
+
+      h1 {
+        background-color: #0077b6;
+        color: white;
+        padding: 20px;
+        margin: 0;
+        text-align: center;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      form {
+        max-width: 800px;
+        margin: 30px auto;
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      h2 {
+        color: #023e8a;
+        margin-top: 30px;
+        border-bottom: 1px solid #ccc;
+        padding-bottom: 5px;
+      }
+
+      label {
+        font-weight: 500;
+        display: block;
+        margin: 10px 0 5px;
+      }
+
+      input[type="text"],
+      input[type="date"],
+      select,
+      input[type="file"] {
+        width: 100%;
+        padding: 8px 10px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        box-sizing: border-box;
+        font-size: 14px;
+      }
+
+      input[type="radio"],
+      input[type="checkbox"] {
+        margin-right: 5px;
+      }
+
+      button[type="submit"],
+      #clearSignature {
+        background-color: #0077b6;
+        color: white;
+        border: none;
+        padding: 10px 18px;
+        margin-top: 15px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s;
+      }
+
+      button:hover {
+        background-color: #005f86;
+      }
+
+      canvas {
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        margin-top: 10px;
+      }
+
+      #gambarContainer img {
+        max-width: 200px;
+        margin: 10px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+      }
+
+      @media (max-width: 600px) {
+        form {
+          padding: 20px;
+        }
+
+        h1 {
+          font-size: 20px;
+          padding: 15px;
+        }
+      }
+
+      canvas {
+        border: 1px solid #000;
+      }
+      #gambarContainer img {
+        max-width: 200px;
+        margin: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Motorbike Rental Form - Canggu</h1>
+
+    <form id="rentalForm">
+      <!-- Bagian 1: Identitas Diri -->
+      <h2>Identitas Diri / <i>Personal Identity</i></h2>
+
+      <label>Nama Lengkap (sesuai paspor):</label>
+      <i>Full Name (as per passport):</i><br />
+      <input type="text" name="nama" required /><br /><br />
+
+      <label>Nomor Paspor:</label> <i>Passport Number:</i><br />
+      <input type="text" name="paspor" required /><br /><br />
+
+      <label>Negara Asal:</label> <i>Country of origin:</i><br />
+      <input type="text" name="negara" required /><br /><br />
+
+      <label>Tanggal Kedatangan di Indonesia:</label>
+      <i>Arrival Date in Indonesia:</i><br />
+      <input type="date" name="tanggal_kedatangan" required /><br /><br />
+
+      <label>Alamat Sementara (penginapan di Bali):</label>
+      <i>Temporary Address (accommodation in Bali):</i><br />
+      <input type="text" name="alamat" required /><br /><br />
+
+      <label>Nomor WhatsApp Aktif:</label> <i>Active WhatsApp Number:</i><br />
+      <input type="text" name="kontak" required /><br /><br />
+
+      <label>Nomor Darurat:</label> <i>Emergency Number:</i><br />
+      <input type="text" name="nomor_darurat" required /><br /><br />
+
+      <!-- Bagian 2: Dokumen Berkendara -->
+      <h2>Dokumen Berkendara / <i>Driving Documents</i></h2>
+
+      <label>Upload SIM Internasional:</label>
+      <i>Upload International Driving License:</i><br />
+      <input type="file" id="simFile" accept="image/*" required /><br /><br />
+
+      <label>Tanggal Berlaku SIM:</label> <i>SIM Validity Date:</i><br />
+      <input type="date" name="tanggal_sim" required /><br /><br />
+
+      <label>Upload Foto Paspor (Halaman Identitas):</label>
+      <i>Upload Passport Photo (Identity Page):</i><br />
+      <input
+        type="file"
+        id="passportFile"
+        accept="image/*"
+        required
+      /><br /><br />
+
+      <label>Upload Foto VISA (jika ada):</label>
+      <i>Upload VISA Photo (if any)</i><br />
+      <input type="file" id="visaFile" accept="image/*" /><br /><br />
+
+      <!-- Bagian 3: Pengalaman Berkendara -->
+      <h2>Pengalaman Berkendara / <i>Driving Experience</i></h2>
+
+      <label>Pernah mengendarai motor di Indonesia?</label>
+      <i>Have you ever ridden a motorbike in Indonesia?</i><br />
+      <input type="radio" name="pengalaman_motor" value="Ya" /> Yes
+      <input type="radio" name="pengalaman_motor" value="Tidak" /> No
+      <br /><br />
+
+      <label>Tingkat Pengalaman Berkendara Motor:</label>
+      <i>Level of Motorbike Riding Experience:</i><br />
+      <select name="tingkat_pengalaman">
+        <option value="Pemula">Pemula / <i>Beginner</i></option>
+        <option value="Menengah">Menengah / <i>Intermediate</i></option>
+        <option value="Mahir">Mahir / <i>Advanced</i></option></select
+      ><br /><br />
+
+      <label>Familiar dengan aturan lalu lintas di Indonesia?</label>
+      <i>Are you familiar with traffic rules in Indonesia?</i><br />
+      <input type="radio" name="aturan_lalu_lintas" value="Ya" /> Yes
+      <input type="radio" name="aturan_lalu_lintas" value="Tidak" /> No
+      <br /><br />
+
+      <!-- Bagian 4: Riwayat Kesehatan -->
+      <h2>Riwayat Kesehatan / <i>Health History</i></h2>
+
+      <label
+        >Apakah memiliki riwayat penyakit yang memengaruhi kemampuan
+        mengemudi?</label
+      >
+      <i>Do you have a history of illness that affects your ability to drive?</i
+      ><br />
+      <input type="radio" name="riwayat_penyakit" value="Ya" /> Yes
+      <input type="radio" name="riwayat_penyakit" value="Tidak" /> No
+      <br /><br />
+
+      <label>Jika Ya, sebutkan secara singkat:</label>
+      <i>If yes, please briefly mention:</i><br />
+      <input type="text" name="penyakit" /><br /><br />
+
+      <label
+        >Apakah saat ini sedang dalam pengaruh obat yang memengaruhi
+        konsentrasi?</label
+      >
+      <i
+        >Are you currently under the influence of drugs that affect
+        concentration?</i
+      ><br />
+      <input type="radio" name="pengaruh_obat" value="Ya" /> Yes
+      <input type="radio" name="pengaruh_obat" value="Tidak" /> No <br /><br />
+
+      <!-- Bagian 5: Persetujuan & Edukasi -->
+      <h2>Persetujuan & Edukasi / <i>Consent & Education</i></h2>
+
+      <label
+        >Telah membaca dan menyetujui panduan berlalu lintas di
+        Indonesia:</label
+      >
+      <i>Have read and agree to the traffic guidelines in Indonesia:</i><br />
+      <input type="checkbox" name="persetujuan" required /> Setuju / <i>Agree</i
+      ><br /><br />
+
+      <label>Menetujui penggunaan helm setiap saat berkendara:</label>
+      <i>Agree to wear a helmet at all times while riding:</i><br />
+      <input type="checkbox" name="helm" required /> Setuju / <i>Agree</i
+      ><br /><br />
+
+      <label
+        >Menetujui untuk tidak mengendarai motor sambil menggunakan
+        ponsel:</label
+      >
+      <i>Agree not to ride a motorbike while using a mobile phone:</i><br />
+      <input type="checkbox" name="ponsel" required /> Setuju / <i>Agree</i
+      ><br /><br />
+
+      <label>Menetujui untuk tidak berkendara dalam keadaan mabuk:</label>
+      <i>Agree not to drive while intoxicated:</i><br />
+      <input type="checkbox" name="mabuk" required /> Setuju / <i>Agree</i
+      ><br /><br />
+
+      <label>Kecepatan maksimal 40–50 km/jam:</label>
+      <i>Maximum speed 40–50 km/h:</i><br />
+      <input type="checkbox" name="kecepatan" required /> Setuju / <i>Agree</i
+      ><br /><br />
+
+      <label
+        >Menetujui untuk mematuhi rambu lalu lintas dan arahan petugas:</label
+      >
+      <i>Agree to obey traffic signs and officer's directions:</i><br />
+      <input type="checkbox" name="rambu" required /> Setuju / <i>Agree</i
+      ><br /><br />
+
+      <label
+        >Memahami bahwa pelanggaran dapat mengakibatkan penyitaan kendaraan dan
+        pemutusan sewa:</label
+      >
+      <i
+        >Understand that violations may result in vehicle seizure and lease
+        termination:</i
+      ><br />
+      <input type="checkbox" name="penyitaan" required /> Setuju / <i>Agree</i
+      ><br /><br />
+
+      <label
+        >Sanksi untuk pelanggaran: Penahanan motor sewaan, dan larangan menyewa
+        kembali:</label
+      >
+      <i
+        >Sanctions for violations: Impoundment of the rented motorbike, and
+        prohibition on re-renting:</i
+      ><br />
+      <input type="checkbox" name="sanksi" required /> Setuju / <i>Agree</i
+      ><br /><br />
+
+      <!-- Bagian 6: Tanda Tangan Digital -->
+      <h2>Tanda Tangan Digital / <i>Digital Signature</i></h2>
+
+      <label>Tanda Tangan Digital:</label>
+      <i>Digital Signature:</i><br />
+      <canvas id="signaturePad" width="300" height="150"></canvas><br />
+      <button type="button" id="clearSignature">Remove</button><br /><br />
+
+      <button type="submit">Submit Form</button>
+    </form>
+
+    <h2></h2>
+    <div id="gambarContainer"></div>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyBGHTRe7G3lGoS3BWRSPDYb_EdDrcqyjsE",
+        authDomain: "saferidecanggu.firebaseapp.com",
+        databaseURL: "https://saferidecanggu-default-rtdb.firebaseio.com",
+        projectId: "saferidecanggu",
+        storageBucket: "saferidecanggu.firebasestorage.app",
+        messagingSenderId: "781942637383",
+        appId: "1:781942637383:web:7cf113c9b9ff8638b24262",
+        measurementId: "G-FGCDKDR82W",
+      };
+      // Inisialisasi Firebase
+      firebase.initializeApp(firebaseConfig);
+      const database = firebase.database();
+
+      const form = document.getElementById("rentalForm");
+      const canvas = document.getElementById("signaturePad");
+      const ctx = canvas.getContext("2d");
+      let drawing = false;
+
+      canvas.addEventListener("mousedown", () => (drawing = true));
+      canvas.addEventListener("mouseup", () => (drawing = false));
+      canvas.addEventListener("mouseout", () => (drawing = false));
+      canvas.addEventListener("mousemove", draw);
+
+      // Untuk layar sentuh
+      canvas.addEventListener("touchstart", (e) => {
+        e.preventDefault();
+        drawing = true;
+        drawTouch(e);
+      });
+      canvas.addEventListener("touchend", () => {
+        drawing = false;
+        ctx.beginPath();
+      });
+      canvas.addEventListener("touchcancel", () => {
+        drawing = false;
+        ctx.beginPath();
+      });
+      canvas.addEventListener("touchmove", (e) => {
+        e.preventDefault();
+        drawTouch(e);
+      });
+
+      function draw(e) {
+        if (!drawing) return;
+        const rect = canvas.getBoundingClientRect();
+        ctx.lineWidth = 2;
+        ctx.lineCap = "round";
+        ctx.strokeStyle = "#000";
+        ctx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
+      }
+      function drawTouch(e) {
+        if (!drawing) return;
+        const touch = e.touches[0];
+        const rect = canvas.getBoundingClientRect();
+        ctx.lineWidth = 2;
+        ctx.lineCap = "round";
+        ctx.strokeStyle = "#000";
+        ctx.lineTo(touch.clientX - rect.left, touch.clientY - rect.top);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(touch.clientX - rect.left, touch.clientY - rect.top);
+      }
+
+      document
+        .getElementById("clearSignature")
+        .addEventListener("click", () => {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+        });
+
+      // Fungsi untuk mengupload file gambar dan mengonversinya menjadi Base64
+      function convertToBase64(file) {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onloadend = function () {
+            resolve(reader.result);
+          };
+          reader.onerror = function () {
+            reject("Error converting to Base64");
+          };
+          reader.readAsDataURL(file);
+        });
+      }
+
+      form.addEventListener("submit", async function (e) {
+        e.preventDefault();
+
+        const formData = new FormData(form);
+        const data = {};
+        formData.forEach((value, key) => {
+          data[key] = value;
+        });
+
+        // Ambil file gambar dan konversi ke Base64
+        const simFile = document.getElementById("simFile").files[0];
+        const passportFile = document.getElementById("passportFile").files[0];
+        const visaFile = document.getElementById("visaFile").files[0];
+
+        try {
+          if (simFile) {
+            const simBase64 = await convertToBase64(simFile);
+            data["sim_url"] = simBase64;
+          }
+
+          if (passportFile) {
+            const passportBase64 = await convertToBase64(passportFile);
+            data["passport_url"] = passportBase64;
+          }
+
+          if (visaFile) {
+            const visaBase64 = await convertToBase64(visaFile);
+            data["visa_url"] = visaBase64;
+          }
+
+          // Menyimpan tanda tangan digital ke Firebase
+          data["tanda_tangan"] = canvas.toDataURL();
+          data["timestamp"] = new Date().toISOString();
+
+          // Simpan data ke Firebase Realtime Database
+          const newFormRef = database.ref("penyewaan_motor").push();
+          newFormRef.set(data);
+
+          alert("Formulir berhasil dikirim!");
+          form.reset();
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+        } catch (error) {
+          alert("Terjadi kesalahan saat mengirim formulir.");
+        }
+      });
+    </script>
+  </body>
+</html>
